@@ -78,7 +78,7 @@ module.exports = {
                 return res.status(201).json({
                     success: true,
                     data: data,
-                    message: 'El usuaria ha sido autenticado',
+                    message: 'El usuario ha sido autenticado',
                 });
             }else{
                 return res.status(401).json({
