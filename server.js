@@ -21,7 +21,7 @@ app.set('port', port);
 //LLamar rutas
 users(app);
 
-server.listen(3000, '10.30.9.13' || 'localhost', function () {
+server.listen(3000, '10.30.3.253' || 'localhost', function () {
     console.log(`Aplicacion de Nodejs ${port} Iniciada...`);
     }
 );
