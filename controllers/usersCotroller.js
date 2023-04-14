@@ -23,6 +23,7 @@ module.exports = {
             const user = req.body;
             const data = await User.create(user);
             await rol.create(data.id, 1);
+            
 
             return res.status(201).json({
                 success: true,
