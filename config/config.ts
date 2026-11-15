@@ -1,10 +1,12 @@
+import pgPromise from 'pg-promise';
+
 const options = {
-    query:(e) => {}
+    query:(e: unknown) => {}
 }
 
-const pgp = require('pg-promise')(options);
+const pgp = pgPromise(options);
 const types = pgp.pg.types;
-types.setTypeParser(1114, function(stringValue){
+types.setTypeParser(1114, function(stringValue: string){
     return stringValue;
 });
 
@@ -17,4 +19,4 @@ const dataBaseConfig = {
 };
 
 const db = pgp(dataBaseConfig);
-module.exports = db;
+export default db;

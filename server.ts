@@ -1,29 +1,28 @@
-const express = require('express');
+import express, { type NextFunction, type Request, type Response } from 'express';
+import http from 'node:http';
+import logger from 'morgan';
+import cors from 'cors';
+import multer from 'multer';
+import { initializeApp, cert, type ServiceAccount } from 'firebase-admin/app';
+import serviceAccount from './serviceAccountKey.json' with { type: 'json' };
+import users from './routes/usersRoutes.ts';
+
 const app = express();
-const http = require('http')
 const server = http.createServer(app);
-const logger = require('morgan');
-const cors = require('cors');
-const multer = require('multer');
-const { initializeApp, cert } = require('firebase-admin/app');
-const serviceAccount = require('./serviceAccountKey.json');
 
 /*
 *INICIALIAZAR FIREBASE ADMIN
 */
 
 initializeApp({
-    credential: cert(serviceAccount)
+    credential: cert(serviceAccount as ServiceAccount)
 });
 
 const upload = multer({
     storage: multer.memoryStorage()
 });
 
-//Rutas
-const users = require('./routes/usersRoutes');
-
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -43,13 +42,10 @@ server.listen(port, process.env.HOST || '192.168.1.7', function () {
 
 
 //ERROR HANDLER
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.log(err);
     res.status(err.status || 500).send(err.stack);
     }
 );
 
-module.exports = {
-    app:app,
-    server:server
-}
+export { app, server };

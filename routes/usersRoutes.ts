@@ -1,7 +1,8 @@
-const UsersController = require('../controllers/usersCotroller');
-const User = require('../models/user');
+import type { Express } from 'express';
+import type { Multer } from 'multer';
+import UsersController from '../controllers/usersCotroller.ts';
 
-module.exports = (app, upload) => {
+export default (app: Express, upload: Multer) => {
     app.get('/api/users/getAll', UsersController.getAll);
 
     app.post('/api/users/create', upload.array('image', 1), UsersController.registerWithImage);

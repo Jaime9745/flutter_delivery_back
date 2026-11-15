@@ -1,11 +1,12 @@
-const User = require('../models/user');
-const rol = require('../models/rol');
-const jwt = require('jsonwebtoken')
-const keys = require('../config/keys')
-const storage = require('../utils/cloud_storage');
+import type { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.ts';
+import rol from '../models/rol.ts';
+import keys from '../config/keys.ts';
+import storage from '../utils/cloud_storage.ts';
 
-module.exports = {
-    async getAll(req,res,next) {
+export default {
+    async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const data  = await User.getAll();
             console.log(`Usuarios: ${data}`);
@@ -19,12 +20,12 @@ module.exports = {
         }
     },
 
-    async register (req, res, next){
+    async register (req: Request, res: Response, next: NextFunction){
         try{
             const user = req.body;
-            const data = await User.create(user);
+            const data = (await User.create(user))!;
             await rol.create(data.id, 1);
-            
+
 
             return res.status(201).json({
                 success: true,
@@ -42,12 +43,12 @@ module.exports = {
         }
     },
 
-    async registerWithImage (req, res, next){
+    async registerWithImage (req: Request, res: Response, next: NextFunction){
         try{
             const user = JSON.parse(req.body.user);
             console.log(`Datos enviados del usuario: ${user}`);
 
-            const files = req.files;
+            const files = req.files as Express.Multer.File[];
 
             if (files.length > 0){
                 const pathImage = `image_${Date.now()}`;
@@ -58,9 +59,9 @@ module.exports = {
                 }
             }
 
-            const data = await User.create(user);
+            const data = (await User.create(user))!;
             await rol.create(data.id, 1);
-            
+
 
             return res.status(201).json({
                 success: true,
@@ -78,7 +79,7 @@ module.exports = {
         }
     },
 
-    async login(req, res, next){
+    async login(req: Request, res: Response, next: NextFunction){
         try{
             const email = req.body.email;
             const password = req.body.password;
@@ -101,7 +102,7 @@ module.exports = {
                         //expresIn: (60*3)
                     }
                 );
-                
+
                 const data = {
                     id: myUser.id,
                     name: myUser.name,

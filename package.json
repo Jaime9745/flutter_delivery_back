@@ -2,10 +2,12 @@
   "name": "nodeprojects",
   "version": "1.0.0",
   "description": "Backend de la aplicacion delivery",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.ts",
+    "dev": "node --watch server.ts",
+    "typecheck": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "flutter",
@@ -30,5 +32,17 @@
   "engines": {
     "node": ">=26.13.1"
   },
-  "packageManager": "pnpm@12.21.0"
+  "packageManager": "pnpm@12.21.0",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.3.0",
+    "@types/node": "^26.6.6",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "typescript": "^7.0.2"
+  },
+  "type": "module"
 }
