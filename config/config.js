@@ -1,6 +1,4 @@
-const promise = require('bluebird');
 const options = {
-    promiseLib: promise,
     query:(e) => {}
 }
 
